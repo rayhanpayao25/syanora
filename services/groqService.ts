@@ -39,9 +39,7 @@ export const getChatSession = () => {
 };
 
 export const sendMessageStream = async (
-  userMessage: string,
-  onChunk: (chunkText: string) => void
-): Promise<void> => {
+userMessage: string, currentUserName: string, onChunk: (chunkText: string) => void): Promise<void> => {
   try {
     // Append user message to history
     chatHistory.push({ role: 'user', content: userMessage });

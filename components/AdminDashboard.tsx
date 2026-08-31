@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Booking } from '../homepage';
 import { 
   ArrowLeft, Trash2, Mail, BedDouble, MessageSquare, Send, X, 
-  Search, BarChart3, Calendar, Filter, CreditCard, Home, Hash, AlertCircle
+  Search, BarChart3, Calendar, Filter, CreditCard, Home, Hash, AlertCircle, Lock, User, ShieldCheck
 } from 'lucide-react';
 
 interface AdminDashboardProps {
@@ -19,7 +19,7 @@ interface Message {
   timestamp: string;
 }
 
-const AdminDashboard: React.FC<AdminDashboardProps> = ({ 
+const AdminDashboardContent: React.FC<AdminDashboardProps> = ({ 
   bookings, 
   onUpdateStatus, 
   onDeleteBooking, 
@@ -492,4 +492,96 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
   );
 };
 
-export default AdminDashboard;
+// Main wrapper component na may kasamang Login Gate gamit ang Admin / Admin123
+export default function AdminController(props: AdminDashboardProps) {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+
+    if (username === 'Admin' && password === 'Admin123') {
+      setIsLoggedIn(true);
+    } else {
+      setError('Mali ang Username o Password. Subukan muli (Admin / Admin123).');
+    }
+  };
+
+  if (!isLoggedIn) {
+    return (
+      <div className="min-h-screen bg-slate-900 text-slate-100 flex flex-col justify-center items-center p-4 relative font-sans">
+        <button 
+          onClick={props.onBackToSite} 
+          className="absolute top-6 left-6 text-slate-400 hover:text-white flex items-center gap-2 text-xs uppercase tracking-wider transition-colors"
+        >
+          <ArrowLeft size={16} /> Back to Home
+        </button>
+
+        <div className="max-w-md w-full bg-slate-800/80 backdrop-blur-md border border-slate-700/60 p-8 rounded-3xl shadow-2xl">
+          <div className="text-center mb-8">
+            <div className="inline-flex p-4 bg-amber-500/10 text-amber-400 rounded-2xl mb-4 border border-amber-500/20">
+              <Lock size={28} />
+            </div>
+            <h2 className="text-2xl font-serif font-bold text-white tracking-wide">Admin Portal</h2>
+            <p className="text-xs text-slate-400 mt-1 uppercase tracking-widest">New Kampot Hotel & Residence</p>
+          </div>
+
+          <form onSubmit={handleLogin} className="space-y-5">
+            {error && (
+              <div className="bg-rose-500/10 border border-rose-500/30 text-rose-400 p-3.5 rounded-xl text-xs flex items-center gap-2">
+                <AlertCircle size={16} className="shrink-0" />
+                <span>{error}</span>
+              </div>
+            )}
+
+            <div>
+              <label className="block text-xs font-semibold text-slate-300 uppercase mb-1.5">Username</label>
+              <div className="relative">
+                <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                  <User size={16} />
+                </span>
+                <input 
+                  type="text" 
+                  required 
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="I-type ang username..."
+                  className="w-full pl-10 pr-4 py-3 bg-slate-900/60 border border-slate-700 rounded-xl text-sm text-white focus:outline-none focus:border-amber-500 transition-colors"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-slate-300 uppercase mb-1.5">Password</label>
+              <div className="relative">
+                <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                  <Lock size={16} />
+                </span>
+                <input 
+                  type="password" 
+                  required 
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="I-type ang password..."
+                  className="w-full pl-10 pr-4 py-3 bg-slate-900/60 border border-slate-700 rounded-xl text-sm text-white focus:outline-none focus:border-amber-500 transition-colors"
+                />
+              </div>
+            </div>
+
+            <button 
+              type="submit" 
+              className="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs uppercase tracking-wider py-3.5 rounded-xl transition-all shadow-lg shadow-amber-500/20 cursor-pointer"
+            >
+              Mag-login bilang Admin
+            </button>
+          </form>
+        </div>
+      </div>
+    );
+  }
+
+  return <AdminDashboardContent {...props} />;
+}

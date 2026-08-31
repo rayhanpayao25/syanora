@@ -6,7 +6,7 @@ import ChatWidget from './components/ChatWidget';
 import logoImage from './srcs/logo.png';
 import { 
   Utensils, Waves, X, CheckCircle, Sparkles, Star, Phone,
-  Compass, ShieldCheck, Heart, Coffee, Send, AlertCircle, Download, Mail, Loader2
+  Compass, ShieldCheck, Heart, Coffee, Send, AlertCircle, Download, Mail, Loader2, Lock
 } from 'lucide-react';
 
 export interface Booking {
@@ -171,7 +171,7 @@ const Homepage: React.FC<HomepageProps> = ({ bookings, onAddBooking }) => {
     }
   };
 
- const handleDirectBookSubmit = async (e: React.FormEvent) => {
+  const handleDirectBookSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setDateError('');
 
@@ -206,7 +206,7 @@ const Homepage: React.FC<HomepageProps> = ({ bookings, onAddBooking }) => {
       guests: formData.guests,
       roomType: formData.roomType,
       paymentMethod: formData.paymentMethod,
-      status: 'Pending', // <--- Binago mula 'Confirmed' patungong 'Pending'
+      status: 'Pending', 
       createdAt: new Date().toISOString().split('T')[0]
     };
 
@@ -244,7 +244,6 @@ const Homepage: React.FC<HomepageProps> = ({ bookings, onAddBooking }) => {
           <span className="text-slate-300">|</span>
           <span className="flex items-center gap-1.5"><ShieldCheck size={13} className="text-emerald-600" /> Best Rate Guarantee</span>
         </span>
-
       </div>
 
       {/* Header */}
@@ -261,14 +260,14 @@ const Homepage: React.FC<HomepageProps> = ({ bookings, onAddBooking }) => {
           </div>
 
           <nav className="hidden md:flex items-center gap-6">
-            <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="text-xs uppercase tracking-widest font-semibold text-slate-600 hover:text-amber-600">Home</button>
-            <button onClick={() => scrollToSection('suites')} className="text-xs uppercase tracking-widest font-semibold text-slate-600 hover:text-amber-600">Suites</button>
-            <button onClick={() => scrollToSection('dining')} className="text-xs uppercase tracking-widest font-semibold text-slate-600 hover:text-amber-600">Dining</button>
-            <button onClick={() => scrollToSection('amenities')} className="text-xs uppercase tracking-widest font-semibold text-slate-600 hover:text-amber-600">Wellness</button>
-
+            <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="text-xs uppercase tracking-widest font-semibold text-slate-600 hover:text-amber-600 transition-colors">Home</button>
+            <button onClick={() => scrollToSection('suites')} className="text-xs uppercase tracking-widest font-semibold text-slate-600 hover:text-amber-600 transition-colors">Suites</button>
+            <button onClick={() => scrollToSection('dining')} className="text-xs uppercase tracking-widest font-semibold text-slate-600 hover:text-amber-600 transition-colors">Dining</button>
+            <button onClick={() => scrollToSection('amenities')} className="text-xs uppercase tracking-widest font-semibold text-slate-600 hover:text-amber-600 transition-colors">Wellness</button>
+            
             <button 
               onClick={() => setIsBookNowOpen(true)}
-              className="bg-amber-500 hover:bg-amber-600 text-white text-xs uppercase tracking-widest font-bold px-6 py-3 rounded-xl shadow-md transition-all"
+              className="bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs uppercase tracking-widest px-5 py-2.5 rounded-xl transition-all shadow-sm"
             >
               Book Now
             </button>
@@ -350,7 +349,7 @@ const Homepage: React.FC<HomepageProps> = ({ bookings, onAddBooking }) => {
                 const IconComponent = dining.icon;
                 return (
                   <div key={idx} className="bg-slate-800/60 p-8 rounded-2xl border border-slate-700/50 flex items-start gap-5">
-                    <div className="p-3 bg-amber-500/10 rounded-xl text-amber-400">
+                    <div className="p-3 bg-amber-500/10 rounded-xl text-amber-400 shrink-0">
                       <IconComponent size={28} />
                     </div>
                     <div>
@@ -389,235 +388,255 @@ const Homepage: React.FC<HomepageProps> = ({ bookings, onAddBooking }) => {
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="bg-slate-900 text-slate-400 text-xs border-t border-slate-800 py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
-          <div>
-            <h5 className="text-white font-serif text-lg font-bold">NEW KAMPOT</h5>
-            <p className="text-slate-500 mt-1">Street 735, Riverside Promenade, Kampot, Cambodia</p>
+      {/* RESPONSIVE FOOTER */}
+      <footer className="bg-slate-900 text-slate-400 text-xs border-t border-slate-800 py-10 sm:py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
+          
+          <div className="space-y-1">
+            <h5 className="text-white font-serif text-lg font-bold tracking-wider">NEW KAMPOT</h5>
+            <p className="text-slate-400 font-light">Street 735, Riverside Promenade, Kampot, Cambodia</p>
+            <p className="text-slate-500 text-[11px] sm:text-xs pt-1 md:hidden">
+              +855 69 527 788 | info@newkampot.com
+            </p>
           </div>
-          <p className="text-slate-500">© {new Date().getFullYear()} New Kampot Hotel & Residence. All rights reserved.</p>
+          
+          <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 pt-2 md:pt-0 border-t border-slate-800 md:border-t-0 w-full md:w-auto justify-center">
+            <p className="text-slate-500 text-[11px] sm:text-xs">
+              © {new Date().getFullYear()} New Kampot Hotel & Residence. All rights reserved.
+            </p>
+
+            <button 
+              onClick={() => navigate('/admin')} 
+              className="text-slate-400 hover:text-amber-400 transition-colors flex items-center justify-center gap-1.5 text-xs uppercase tracking-wider font-medium px-3 py-1.5 rounded-lg border border-slate-800 hover:border-amber-500/50 bg-slate-800/40"
+            >
+              <Lock size={13} className="text-amber-500" /> Admin Portal
+            </button>
+          </div>
+
         </div>
       </footer>
 
       {/* DIRECT BOOK NOW MODAL */}
       {isBookNowOpen && (
-        <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white text-slate-800 rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto">
-            <button onClick={resetAllModals} className="absolute top-5 right-5 text-slate-400 hover:text-slate-700 z-10">
+        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+          <div className="bg-white text-slate-800 rounded-3xl max-w-lg w-full p-5 sm:p-8 shadow-2xl relative my-auto max-h-[90vh] flex flex-col">
+            <button onClick={resetAllModals} className="absolute top-4 right-4 sm:top-5 sm:right-5 text-slate-400 hover:text-slate-700 z-10 p-2">
               <X size={20} />
             </button>
 
-            {!bookingSubmitted ? (
-              <form onSubmit={handleDirectBookSubmit} className="space-y-4">
-                <h3 className="text-2xl font-serif text-slate-900 mb-2">Reserve Your Stay</h3>
-                
-                {dateError && (
-                  <div className="bg-rose-50 border border-rose-200 text-rose-700 px-4 py-3 rounded-xl text-xs flex items-center gap-2">
-                    <AlertCircle size={16} className="shrink-0 text-rose-500" />
-                    <span>{dateError}</span>
-                  </div>
-                )}
+            <div className="overflow-y-auto pr-1 space-y-4">
+              {!bookingSubmitted ? (
+                <form onSubmit={handleDirectBookSubmit} className="space-y-4">
+                  <h3 className="text-xl sm:text-2xl font-serif text-slate-900 mb-1 pr-6">Reserve Your Stay</h3>
+                  
+                  {dateError && (
+                    <div className="bg-rose-50 border border-rose-200 text-rose-700 px-4 py-3 rounded-xl text-xs flex items-center gap-2">
+                      <AlertCircle size={16} className="shrink-0 text-rose-500" />
+                      <span>{dateError}</span>
+                    </div>
+                  )}
 
-                <div className="relative h-36 rounded-2xl overflow-hidden mb-4 border border-slate-200 shadow-inner">
-                  <img src={selectedBookNowRoom.image} alt={selectedBookNowRoom.name} className="w-full h-full object-cover" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent flex items-end p-4">
-                    <div className="text-white">
-                      <p className="text-xs uppercase font-bold text-amber-400 tracking-wider">{selectedBookNowRoom.price} / night</p>
-                      <h4 className="font-serif text-sm font-semibold">{selectedBookNowRoom.name}</h4>
+                  <div className="relative h-32 sm:h-36 rounded-2xl overflow-hidden mb-4 border border-slate-200 shadow-inner">
+                    <img src={selectedBookNowRoom.image} alt={selectedBookNowRoom.name} className="w-full h-full object-cover" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent flex items-end p-4">
+                      <div className="text-white">
+                        <p className="text-[11px] sm:text-xs uppercase font-bold text-amber-400 tracking-wider">{selectedBookNowRoom.price} / night</p>
+                        <h4 className="font-serif text-xs sm:text-sm font-semibold">{selectedBookNowRoom.name}</h4>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 uppercase mb-1">Accommodation Type</label>
-                  <select 
-                    name="roomType" 
-                    value={formData.roomType} 
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-300 text-sm focus:outline-none focus:border-amber-500 font-medium"
-                  >
-                    {ROOM_TYPES.map(room => (
-                      <option key={room.id} value={room.name}>{room.name} ({room.price})</option>
-                    ))}
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 uppercase mb-1">Guest Full Name</label>
-                  <input 
-                    type="text" 
-                    name="fullName"
-                    required 
-                    value={formData.fullName}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-300 text-sm focus:outline-none focus:border-amber-500"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 uppercase mb-1">Email Address</label>
-                  <input 
-                    type="email" 
-                    name="email"
-                    required 
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    placeholder="e.g. name@example.com"
-                    className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-300 text-sm focus:outline-none focus:border-amber-500"
-                  />
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 uppercase mb-1">Check-in</label>
+                    <label className="block text-xs font-semibold text-slate-700 uppercase mb-1">Accommodation Type</label>
+                    <select 
+                      name="roomType" 
+                      value={formData.roomType} 
+                      onChange={handleInputChange}
+                      className="w-full px-3.5 sm:px-4 py-3 rounded-xl bg-slate-50 border border-slate-300 text-sm focus:outline-none focus:border-amber-500 font-medium"
+                    >
+                      {ROOM_TYPES.map(room => (
+                        <option key={room.id} value={room.name}>{room.name} ({room.price})</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-700 uppercase mb-1">Guest Full Name</label>
                     <input 
-                      type="date" 
-                      name="checkIn" 
+                      type="text" 
+                      name="fullName"
                       required 
-                      min={todayStr}
-                      value={formData.checkIn} 
-                      onChange={handleInputChange} 
-                      className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-300 text-xs focus:outline-none focus:border-amber-500" 
+                      value={formData.fullName}
+                      onChange={handleInputChange}
+                      className="w-full px-3.5 sm:px-4 py-3 rounded-xl bg-slate-50 border border-slate-300 text-sm sm:text-base focus:outline-none focus:border-amber-500"
                     />
                   </div>
+
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 uppercase mb-1">Check-out</label>
+                    <label className="block text-xs font-semibold text-slate-700 uppercase mb-1">Email Address</label>
                     <input 
-                      type="date" 
-                      name="checkOut" 
+                      type="email" 
+                      name="email"
                       required 
-                      min={formData.checkIn || todayStr}
-                      value={formData.checkOut} 
-                      onChange={handleInputChange} 
-                      className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-300 text-xs focus:outline-none focus:border-amber-500" 
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      placeholder="e.g. name@example.com"
+                      className="w-full px-3.5 sm:px-4 py-3 rounded-xl bg-slate-50 border border-slate-300 text-sm sm:text-base focus:outline-none focus:border-amber-500"
                     />
                   </div>
-                </div>
 
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 uppercase mb-1">Number of Guests</label>
-                  <select 
-                    name="guests" 
-                    value={formData.guests} 
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-300 text-sm focus:outline-none focus:border-amber-500"
-                  >
-                    <option value="1">1 Guest</option>
-                    <option value="2">2 Guests</option>
-                    <option value="3">3 Guests</option>
-                    <option value="4">4 Guests</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 uppercase mb-1">Mode of Payment</label>
-                  <select 
-                    name="paymentMethod" 
-                    value={formData.paymentMethod} 
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-300 text-sm focus:outline-none focus:border-amber-500 font-medium"
-                  >
-                    <option value="Pay at Resort">Pay at Resort (Cash / Card)</option>
-                    <option value="Credit Card">Credit / Debit Card</option>
-                    <option value="ABA PayWay">ABA PayWay (QR / KHQR)</option>
-                    <option value="Bank Transfer">Direct Bank Transfer</option>
-                  </select>
-                </div>
-
-                <button type="submit" className="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs uppercase py-4 rounded-xl shadow-md mt-4 transition-all">
-                  Confirm Reservation & Send E-Receipt
-                </button>
-              </form>
-            ) : (
-              <div className="text-center py-6 space-y-4">
-                <CheckCircle size={56} className="text-emerald-500 mx-auto animate-bounce" />
-                <h3 className="text-2xl font-serif text-slate-900">Reservation Confirmed!</h3>
-                
-                {currentBookingId && (
-                  <div className="inline-block bg-slate-100 border border-slate-200 px-3 py-1.5 rounded-xl font-mono text-xs text-slate-700">
-                    Booking Reference: <strong className="text-amber-600">#{currentBookingId}</strong>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-700 uppercase mb-1">Check-in</label>
+                      <input 
+                        type="date" 
+                        name="checkIn" 
+                        required 
+                        min={todayStr}
+                        value={formData.checkIn} 
+                        onChange={handleInputChange} 
+                        className="w-full px-3.5 sm:px-4 py-3 rounded-xl bg-slate-50 border border-slate-300 text-xs sm:text-sm focus:outline-none focus:border-amber-500" 
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-700 uppercase mb-1">Check-out</label>
+                      <input 
+                        type="date" 
+                        name="checkOut" 
+                        required 
+                        min={formData.checkIn || todayStr}
+                        value={formData.checkOut} 
+                        onChange={handleInputChange} 
+                        className="w-full px-3.5 sm:px-4 py-3 rounded-xl bg-slate-50 border border-slate-300 text-xs sm:text-sm focus:outline-none focus:border-amber-500" 
+                      />
+                    </div>
                   </div>
-                )}
 
-                <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 text-left text-xs space-y-2 text-slate-700">
-                  {isSendingEmail ? (
-                    <p className="flex items-center gap-2 text-slate-600">
-                      <Loader2 size={14} className="animate-spin text-amber-600" /> 
-                      Sending e-receipt to <strong className="text-slate-900">{formData.email}</strong>...
-                    </p>
-                  ) : emailStatus === 'success' ? (
-                    <p className="text-emerald-700 font-medium">
-                      ✓ E-receipt successfully sent to <strong className="text-slate-900">{formData.email}</strong>. Please check your inbox or spam folder.
-                    </p>
-                  ) : (
-                    <p className="text-rose-600 leading-relaxed font-medium">
-                      There was an issue sending the email via EmailJS. Please make sure your credentials are updated. You can also download the receipt directly below.
-                    </p>
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-700 uppercase mb-1">Number of Guests</label>
+                    <select 
+                      name="guests" 
+                      value={formData.guests} 
+                      onChange={handleInputChange}
+                      className="w-full px-3.5 sm:px-4 py-3 rounded-xl bg-slate-50 border border-slate-300 text-sm focus:outline-none focus:border-amber-500"
+                    >
+                      <option value="1">1 Guest</option>
+                      <option value="2">2 Guests</option>
+                      <option value="3">3 Guests</option>
+                      <option value="4">4 Guests</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-700 uppercase mb-1">Mode of Payment</label>
+                    <select 
+                      name="paymentMethod" 
+                      value={formData.paymentMethod} 
+                      onChange={handleInputChange}
+                      className="w-full px-3.5 sm:px-4 py-3 rounded-xl bg-slate-50 border border-slate-300 text-sm focus:outline-none focus:border-amber-500 font-medium"
+                    >
+                      <option value="Pay at Resort">Pay at Resort (Cash / Card)</option>
+                      <option value="Credit Card">Credit / Debit Card</option>
+                      <option value="ABA PayWay">ABA PayWay (QR / KHQR)</option>
+                      <option value="Bank Transfer font-medium">Direct Bank Transfer</option>
+                    </select>
+                  </div>
+
+                  <button type="submit" className="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs uppercase py-4 rounded-xl shadow-md mt-4 transition-all">
+                    Confirm Reservation & Send E-Receipt
+                  </button>
+                </form>
+              ) : (
+                <div className="text-center py-6 space-y-4">
+                  <CheckCircle size={56} className="text-emerald-500 mx-auto animate-bounce" />
+                  <h3 className="text-xl sm:text-2xl font-serif text-slate-900">Reservation Confirmed!</h3>
+                  
+                  {currentBookingId && (
+                    <div className="inline-block bg-slate-100 border border-slate-200 px-3 py-1.5 rounded-xl font-mono text-xs text-slate-700">
+                      Booking Reference: <strong className="text-amber-600">#{currentBookingId}</strong>
+                    </div>
                   )}
-                </div>
 
-                <div className="pt-2 flex flex-col gap-2">
-                  <button 
-                    onClick={() => {
-                      const printWindow = window.open('', '_blank');
-                      if (printWindow) {
-                        printWindow.document.write(`
-                          <!DOCTYPE html>
-                          <html>
-                            <head>
-                              <title>Booking Receipt #${currentBookingId}</title>
-                              <style>
-                                body { font-family: sans-serif; padding: 40px; color: #334155; }
-                                .card { max-width: 600px; margin: 0 auto; border: 1px solid #cbd5e1; border-radius: 16px; padding: 32px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-                                h1 { font-size: 22px; color: #0f172a; margin-bottom: 4px; }
-                                .tag { background: #fef3c7; color: #d97706; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-block; margin-bottom: 20px; }
-                                .row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f1f5f9; font-size: 14px; }
-                                .label { color: #64748b; }
-                                .value { font-weight: 600; color: #0f172a; }
-                                .footer { margin-top: 24px; text-align: center; font-size: 12px; color: #94a3b8; }
-                              </style>
-                            </head>
-                            <body>
-                              <div class="card">
-                                <h1>New Kampot Hotel & Residence</h1>
-                                <span class="tag">Confirmed Reservation</span>
-                                
-                                <div class="row"><span class="label">Booking ID</span><span class="value">#${currentBookingId}</span></div>
-                                <div class="row"><span class="label">Guest Name</span><span class="value">${formData.fullName}</span></div>
-                                <div class="row"><span class="label">Email Address</span><span class="value">${formData.email}</span></div>
-                                <div class="row"><span class="label">Room Suite</span><span class="value">${formData.roomType}</span></div>
-                                <div class="row"><span class="label">Check-in Date</span><span class="value">${formData.checkIn}</span></div>
-                                <div class="row"><span class="label">Check-out Date</span><span class="value">${formData.checkOut}</span></div>
-                                <div class="row"><span class="label">Guests</span><span class="value">${formData.guests}</span></div>
-                                <div class="row"><span class="label">Payment Method</span><span class="value">${formData.paymentMethod}</span></div>
-                                
-                                <div class="footer">Thank you for choosing New Kampot. We look forward to welcoming you!</div>
-                              </div>
-                              <script>
-                                window.onload = function() {
-                                  window.print();
-                                };
-                              </script>
-                            </body>
-                          </html>
-                        `);
-                        printWindow.document.close();
-                      }
-                    }}
-                    className="w-full bg-amber-500 hover:bg-amber-600 text-white font-medium px-6 py-3 rounded-xl text-xs uppercase transition-all flex items-center justify-center gap-2"
-                  >
-                    <Download size={16} /> Download E-Receipt Directly Below
-                  </button>
-                  <button onClick={resetAllModals} className="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium px-6 py-3 rounded-xl text-xs uppercase transition-all">
-                    Close Window
-                  </button>
+                  <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 text-left text-xs space-y-2 text-slate-700">
+                    {isSendingEmail ? (
+                      <p className="flex items-center gap-2 text-slate-600">
+                        <Loader2 size={14} className="animate-spin text-amber-600 shrink-0" /> 
+                        <span>Sending e-receipt to <strong className="text-slate-900">{formData.email}</strong>...</span>
+                      </p>
+                    ) : emailStatus === 'success' ? (
+                      <p className="text-emerald-700 font-medium">
+                        ✓ E-receipt successfully sent to <strong className="text-slate-900">{formData.email}</strong>. Please check your inbox or spam folder.
+                      </p>
+                    ) : (
+                      <p className="text-rose-600 leading-relaxed font-medium">
+                        There was an issue sending the email via EmailJS. Please make sure your credentials are updated. You can also download the receipt directly below.
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="pt-2 flex flex-col gap-2">
+                    <button 
+                      onClick={() => {
+                        const printWindow = window.open('', '_blank');
+                        if (printWindow) {
+                          printWindow.document.write(`
+                            <!DOCTYPE html>
+                            <html>
+                              <head>
+                                <title>Booking Receipt #${currentBookingId}</title>
+                                <style>
+                                  body { font-family: sans-serif; padding: 40px; color: #334155; }
+                                  .card { max-width: 600px; margin: 0 auto; border: 1px solid #cbd5e1; border-radius: 16px; padding: 32px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+                                  h1 { font-size: 22px; color: #0f172a; margin-bottom: 4px; }
+                                  .tag { background: #fef3c7; color: #d97706; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-block; margin-bottom: 20px; }
+                                  .row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f1f5f9; font-size: 14px; }
+                                  .label { color: #64748b; }
+                                  .value { font-weight: 600; color: #0f172a; }
+                                  .footer { margin-top: 24px; text-align: center; font-size: 12px; color: #94a3b8; }
+                                </style>
+                              </head>
+                              <body>
+                                <div class="card">
+                                  <h1>New Kampot Hotel & Residence</h1>
+                                  <span class="tag">Confirmed Reservation</span>
+                                  
+                                  <div class="row"><span class="label">Booking ID</span><span class="value">#${currentBookingId}</span></div>
+                                  <div class="row"><span class="label">Guest Name</span><span class="value">${formData.fullName}</span></div>
+                                  <div class="row"><span class="label">Email Address</span><span class="value">${formData.email}</span></div>
+                                  <div class="row"><span class="label">Room Suite</span><span class="value">${formData.roomType}</span></div>
+                                  <div class="row"><span class="label">Check-in Date</span><span class="value">${formData.checkIn}</span></div>
+                                  <div class="row"><span class="label">Check-out Date</span><span class="value">${formData.checkOut}</span></div>
+                                  <div class="row"><span class="label">Guests</span><span class="value">${formData.guests}</span></div>
+                                  <div class="row"><span class="label">Payment Method</span><span class="value">${formData.paymentMethod}</span></div>
+                                  
+                                  <div class="footer">Thank you for choosing New Kampot. We look forward to welcoming you!</div>
+                                </div>
+                                <script>
+                                  window.onload = function() {
+                                    window.print();
+                                  };
+                                </script>
+                              </body>
+                            </html>
+                          `);
+                          printWindow.document.close();
+                        }
+                      }}
+                      className="w-full bg-amber-500 hover:bg-amber-600 text-white font-medium px-6 py-3.5 rounded-xl text-xs uppercase transition-all flex items-center justify-center gap-2"
+                    >
+                      <Download size={16} /> Download E-Receipt Directly Below
+                    </button>
+                    <button onClick={resetAllModals} className="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium px-6 py-3.5 rounded-xl text-xs uppercase transition-all">
+                      Close Window
+                    </button>
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
       )}
+
       <ChatWidget />
     </div>
   );
