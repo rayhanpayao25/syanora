@@ -162,6 +162,15 @@ const ChatWidget: React.FC = () => {
   };
 
   const handleAgreePrivacy = () => {
+    // 1. Render the user's action as a chat bubble
+    addMessage({
+      id: generateUniqueId(),
+      text: 'I Agree',
+      sender: 'user',
+      timestamp: new Date(),
+    });
+
+    // 2. Advance state and reply
     setFlowStep('READY');
     addMessage({
       id: generateUniqueId(),
@@ -270,9 +279,19 @@ const ChatWidget: React.FC = () => {
 
     if (flowStep === 'ASKING_NAME') {
       const extractedName = text;
+
+      // 1. Render user's name input as a user bubble
+      addMessage({
+        id: generateUniqueId(),
+        text: extractedName,
+        sender: 'user',
+        timestamp: new Date(),
+      });
+
       setUserName(extractedName);
       setFlowStep('CHATTING');
 
+      // 2. Render bot greeting
       addMessage({
         id: generateUniqueId(),
         text: `Nice to meet you, ${extractedName}! Let me look into your question right away.`,
@@ -400,7 +419,6 @@ const ChatWidget: React.FC = () => {
                     : 'Ask about suites, dining, or amenities...'
                 }
                 disabled={flowStep === 'PRIVACY' || isLoading}
-                /* Binago ang text-sm papuntang text-base para sa mobile viewports upang maiwasan ang auto-zoom ng mobile Safari */
                 className="flex-1 px-4 py-2.5 sm:py-3 text-base sm:text-sm bg-stone-50/80 rounded-2xl border border-amber-200/70 focus:outline-none focus:ring-2 focus:ring-amber-500/40 focus:bg-white disabled:opacity-50 disabled:cursor-not-allowed text-stone-800 placeholder-stone-400 shadow-sm transition-all"
               />
               <button
