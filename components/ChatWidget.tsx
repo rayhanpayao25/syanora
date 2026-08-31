@@ -162,7 +162,6 @@ const ChatWidget: React.FC = () => {
   };
 
   const handleAgreePrivacy = () => {
-    // 1. Render the user's action as a chat bubble
     addMessage({
       id: generateUniqueId(),
       text: 'I Agree',
@@ -170,7 +169,6 @@ const ChatWidget: React.FC = () => {
       timestamp: new Date(),
     });
 
-    // 2. Advance state and reply
     setFlowStep('READY');
     addMessage({
       id: generateUniqueId(),
@@ -280,7 +278,6 @@ const ChatWidget: React.FC = () => {
     if (flowStep === 'ASKING_NAME') {
       const extractedName = text;
 
-      // 1. Render user's name input as a user bubble
       addMessage({
         id: generateUniqueId(),
         text: extractedName,
@@ -291,7 +288,6 @@ const ChatWidget: React.FC = () => {
       setUserName(extractedName);
       setFlowStep('CHATTING');
 
-      // 2. Render bot greeting
       addMessage({
         id: generateUniqueId(),
         text: `Nice to meet you, ${extractedName}! Let me look into your question right away.`,
@@ -341,7 +337,7 @@ const ChatWidget: React.FC = () => {
 
       {/* Main Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-20 right-4 sm:bottom-24 sm:right-6 z-[9998] w-[calc(100vw-32px)] sm:w-[400px] h-[480px] sm:h-[580px] max-h-[calc(100vh-100px)] bg-white/95 backdrop-blur-xl rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.2)] border border-amber-100/80 flex flex-col overflow-hidden transition-all duration-300 animate-in fade-in slide-in-from-bottom-5">
+        <div className="fixed bottom-20 left-4 right-4 sm:left-auto sm:right-6 z-[9998] sm:w-[400px] h-[480px] sm:h-[580px] max-h-[calc(100vh-100px)] bg-white/95 backdrop-blur-xl rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.2)] border border-amber-100/80 flex flex-col overflow-hidden transition-all duration-300 animate-in fade-in slide-in-from-bottom-5">
           
           {/* Header */}
           <div className="bg-gradient-to-r from-amber-700 via-amber-800 to-amber-900 text-white px-4 sm:px-5 py-3.5 sm:py-4 flex items-center justify-between shadow-lg shrink-0 relative overflow-hidden">
