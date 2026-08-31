@@ -318,12 +318,26 @@ const ChatWidget: React.FC = () => {
 
   return (
     <>
-      {/* Injected Style Rule para siguradong walang horizontal scroll/swipe */}
+      {/* Strict CSS rules to lock viewport and force date pickers / forms within screen bounds */}
       <style>{`
         html, body {
           max-width: 100vw !important;
           overflow-x: hidden !important;
           touch-action: pan-y !important;
+        }
+
+        /* Contains any calendar/date-picker inputs within mobile limits */
+        input[type="date"], 
+        input[type="datetime-local"],
+        .react-datepicker,
+        .flatpickr-calendar {
+          max-width: 100% !important;
+          box-sizing: border-box !important;
+        }
+
+        /* Prevents horizontal overflow from form elements */
+        * {
+          max-width: 100%;
         }
       `}</style>
 
@@ -344,7 +358,7 @@ const ChatWidget: React.FC = () => {
         )}
       </button>
 
-      {/* Main Chat Window */}
+      {/* Main Chat Window Container */}
       {isOpen && (
         <div 
           style={{ touchAction: 'pan-y' }}
@@ -387,13 +401,13 @@ const ChatWidget: React.FC = () => {
             </button>
           </div>
 
-          {/* Messages Feed */}
+          {/* Messages Feed Container */}
           <div 
             style={{ touchAction: 'pan-y' }}
-            className="flex-1 overflow-y-auto overflow-x-hidden p-4 sm:p-5 space-y-4 bg-gradient-to-b from-stone-50/50 to-amber-50/20 scroll-smooth touch-pan-y"
+            className="flex-1 overflow-y-auto overflow-x-hidden p-4 sm:p-5 space-y-4 bg-gradient-to-b from-stone-50/50 to-amber-50/20 scroll-smooth touch-pan-y max-w-full"
           >
             {messages.map((msg) => (
-              <React.Fragment key={msg.id}>
+              <div key={msg.id} className="w-full max-w-full overflow-hidden">
                 <MessageBubble message={msg} />
                 {msg.id === 'privacy-1' && flowStep === 'PRIVACY' && (
                   <div className="flex justify-start pl-2 mt-1">
@@ -406,16 +420,16 @@ const ChatWidget: React.FC = () => {
                     </button>
                   </div>
                 )}
-              </React.Fragment>
+              </div>
             ))}
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Input Footer */}
-          <div className="bg-white/80 backdrop-blur-md border-t border-amber-100/60 flex flex-col shrink-0 p-3 sm:p-4 shadow-[0_-10px_20px_rgba(0,0,0,0.02)]">
+          {/* Input Footer Container */}
+          <div className="bg-white/80 backdrop-blur-md border-t border-amber-100/60 flex flex-col shrink-0 p-3 sm:p-4 shadow-[0_-10px_20px_rgba(0,0,0,0.02)] max-w-full overflow-hidden">
             <form
               onSubmit={handleSend}
-              className="flex items-center space-x-2"
+              className="flex items-center space-x-2 w-full max-w-full"
             >
               <input
                 ref={inputRef}
@@ -430,7 +444,7 @@ const ChatWidget: React.FC = () => {
                     : 'Ask about suites, dining, or amenities...'
                 }
                 disabled={flowStep === 'PRIVACY' || isLoading}
-                className="flex-1 px-4 py-2.5 sm:py-3 text-base sm:text-sm bg-stone-50/80 rounded-2xl border border-amber-200/70 focus:outline-none focus:ring-2 focus:ring-amber-500/40 focus:bg-white disabled:opacity-50 disabled:cursor-not-allowed text-stone-800 placeholder-stone-400 shadow-sm transition-all"
+                className="flex-1 min-w-0 px-4 py-2.5 sm:py-3 text-base sm:text-sm bg-stone-50/80 rounded-2xl border border-amber-200/70 focus:outline-none focus:ring-2 focus:ring-amber-500/40 focus:bg-white disabled:opacity-50 disabled:cursor-not-allowed text-stone-800 placeholder-stone-400 shadow-sm transition-all"
               />
               <button
                 type="submit"
@@ -443,11 +457,11 @@ const ChatWidget: React.FC = () => {
             </form>
 
             {/* End Session Bar */}
-            <div className="px-2 pt-2 flex justify-between items-center text-xs">
-              <span className="text-stone-400 font-medium pl-1 scale-90 origin-left">New Kampot Hotel Ai Assistant</span>
+            <div className="px-2 pt-2 flex justify-between items-center text-xs w-full">
+              <span className="text-stone-400 font-medium pl-1 scale-90 origin-left truncate">New Kampot Hotel Ai Assistant</span>
               <button
                 onClick={handleEndSession}
-                className="inline-flex items-center space-x-1 text-stone-500 hover:text-amber-800 transition-colors font-medium py-1 px-2 rounded-lg hover:bg-amber-50"
+                className="inline-flex items-center space-x-1 text-stone-500 hover:text-amber-800 transition-colors font-medium py-1 px-2 rounded-lg hover:bg-amber-50 shrink-0"
                 aria-label="End Session"
               >
                 <RotateCcw className="w-3.5 h-3.5 text-stone-400" />
