@@ -6,7 +6,7 @@ import ChatWidget from './components/ChatWidget';
 import logoImage from './srcs/logo.png';
 import { 
   Utensils, Waves, X, CheckCircle, Sparkles, Star, Phone,
-  Compass, ShieldCheck, Heart, Coffee, Send, AlertCircle, Download, Mail, Loader2, Lock
+  Compass, ShieldCheck, Heart, Coffee, AlertCircle, Download, Loader2, Lock
 } from 'lucide-react';
 
 export interface Booking {
@@ -232,7 +232,7 @@ const Homepage: React.FC<HomepageProps> = ({ bookings, onAddBooking }) => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col font-sans bg-slate-50 text-slate-800 relative">
+    <div className="min-h-screen flex flex-col font-sans bg-slate-50 text-slate-800 relative w-full overflow-x-hidden">
       
       {/* Announcement Bar */}
       <div className="bg-slate-100 text-amber-700 text-xs py-2.5 px-4 text-center border-b border-slate-200 flex justify-between items-center max-w-full mx-auto w-full">
@@ -247,7 +247,7 @@ const Homepage: React.FC<HomepageProps> = ({ bookings, onAddBooking }) => {
       </div>
 
       {/* Header */}
-      <header className="bg-white/90 backdrop-blur-md shadow-sm sticky top-0 z-40 border-b border-slate-200">
+      <header className="bg-white/90 backdrop-blur-md shadow-sm sticky top-0 z-40 border-b border-slate-200 w-full">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-24 flex items-center justify-between">
           <div className="flex items-center gap-4 cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
             <div className="relative p-0.5 rounded-xl bg-gradient-to-tr from-amber-500 to-emerald-500">
@@ -276,8 +276,8 @@ const Homepage: React.FC<HomepageProps> = ({ bookings, onAddBooking }) => {
       </header>
 
       {/* Hero Section */}
-      <main className="flex-1 bg-slate-50">
-        <div className="relative min-h-[550px] flex items-center justify-center overflow-hidden">
+      <main className="flex-1 bg-slate-50 w-full">
+        <div className="relative min-h-[550px] flex items-center justify-center overflow-hidden w-full">
           <div className="absolute inset-0">
             <img src={bgImage} alt="Background" className="w-full h-full object-cover filter brightness-95" />
             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/40 to-slate-900/20" />
@@ -336,7 +336,7 @@ const Homepage: React.FC<HomepageProps> = ({ bookings, onAddBooking }) => {
         </div>
 
         {/* Dining Section */}
-        <div id="dining" className="bg-slate-900 text-white py-20">
+        <div id="dining" className="bg-slate-900 text-white py-20 w-full">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-2xl mx-auto mb-16">
               <span className="text-amber-400 text-xs uppercase tracking-[0.3em] font-bold">Gastronomy</span>
@@ -388,8 +388,8 @@ const Homepage: React.FC<HomepageProps> = ({ bookings, onAddBooking }) => {
         </div>
       </main>
 
-      {/* RESPONSIVE FOOTER */}
-      <footer className="bg-slate-900 text-slate-400 text-xs border-t border-slate-800 py-10 sm:py-12">
+      {/* Footer */}
+      <footer className="bg-slate-900 text-slate-400 text-xs border-t border-slate-800 py-10 sm:py-12 w-full">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
           
           <div className="space-y-1">
@@ -416,53 +416,53 @@ const Homepage: React.FC<HomepageProps> = ({ bookings, onAddBooking }) => {
         </div>
       </footer>
 
-      {/* DIRECT BOOK NOW MODAL WITH HORIZONTAL SCROLL & OVERFLOW FIX */}
+      {/* DIRECT BOOK NOW MODAL (STRICT MOBILE CONTAINMENT FIX) */}
       {isBookNowOpen && (
-        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4 overflow-auto">
-          <div className="bg-white text-slate-800 rounded-3xl w-[95%] max-w-lg p-4 sm:p-8 shadow-2xl relative my-auto max-h-[90vh] flex flex-col border border-slate-100 overflow-x-auto">
+        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto overflow-x-hidden">
+          <div className="bg-white text-slate-800 rounded-2xl sm:rounded-3xl w-full max-w-[calc(100vw-1.5rem)] sm:max-w-lg p-4 sm:p-8 shadow-2xl relative my-auto max-h-[88vh] flex flex-col border border-slate-100 overflow-hidden">
             
-            {/* Modal Header */}
-            <div className="flex items-center justify-between pb-4 mb-2 border-b border-slate-100 shrink-0 min-w-[280px]">
-              <h3 className="text-xl sm:text-2xl font-serif text-slate-900 whitespace-nowrap">
+            {/* Header */}
+            <div className="flex items-center justify-between pb-3 mb-3 border-b border-slate-100 shrink-0 w-full">
+              <h3 className="text-lg sm:text-2xl font-serif text-slate-900 truncate pr-2">
                 {!bookingSubmitted ? 'Reserve Your Stay' : 'Reservation Confirmed!'}
               </h3>
               <button 
                 onClick={resetAllModals} 
-                className="text-slate-400 hover:text-slate-700 p-2 rounded-full hover:bg-slate-100 transition-colors shrink-0"
+                className="text-slate-400 hover:text-slate-700 p-1.5 rounded-full hover:bg-slate-100 transition-colors shrink-0"
                 aria-label="Close modal"
               >
                 <X size={20} />
               </button>
             </div>
 
-            {/* Scrollable Form Content */}
-            <div className="overflow-x-auto overflow-y-auto pr-1 space-y-4 flex-1 min-w-[280px]">
+            {/* Form Content Wrapper */}
+            <div className="overflow-y-auto overflow-x-hidden pr-1 space-y-4 flex-1 w-full">
               {!bookingSubmitted ? (
-                <form onSubmit={handleDirectBookSubmit} className="space-y-4 min-w-[280px]">
+                <form onSubmit={handleDirectBookSubmit} className="space-y-3.5 w-full">
                   {dateError && (
-                    <div className="bg-rose-50 border border-rose-200 text-rose-700 px-4 py-3 rounded-xl text-xs flex items-center gap-2">
+                    <div className="bg-rose-50 border border-rose-200 text-rose-700 px-3.5 py-2.5 rounded-xl text-xs flex items-center gap-2">
                       <AlertCircle size={16} className="shrink-0 text-rose-500" />
                       <span>{dateError}</span>
                     </div>
                   )}
 
-                  <div className="relative h-32 sm:h-36 rounded-2xl overflow-hidden mb-4 border border-slate-200 shadow-inner min-w-[260px]">
+                  <div className="relative h-28 sm:h-36 rounded-xl sm:rounded-2xl overflow-hidden mb-3 border border-slate-200 shadow-inner w-full">
                     <img src={selectedBookNowRoom.image} alt={selectedBookNowRoom.name} className="w-full h-full object-cover" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent flex items-end p-4">
-                      <div className="text-white">
-                        <p className="text-[11px] sm:text-xs uppercase font-bold text-amber-400 tracking-wider">{selectedBookNowRoom.price} / night</p>
-                        <h4 className="font-serif text-xs sm:text-sm font-semibold">{selectedBookNowRoom.name}</h4>
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent flex items-end p-3 sm:p-4">
+                      <div className="text-white min-w-0">
+                        <p className="text-[10px] sm:text-xs uppercase font-bold text-amber-400 tracking-wider">{selectedBookNowRoom.price} / night</p>
+                        <h4 className="font-serif text-xs sm:text-sm font-semibold truncate">{selectedBookNowRoom.name}</h4>
                       </div>
                     </div>
                   </div>
 
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-700 uppercase mb-1">Accommodation Type</label>
+                  <div className="w-full min-w-0">
+                    <label className="block text-[11px] sm:text-xs font-semibold text-slate-700 uppercase mb-1">Accommodation Type</label>
                     <select 
                       name="roomType" 
                       value={formData.roomType} 
                       onChange={handleInputChange}
-                      className="w-full px-3.5 sm:px-4 py-3 rounded-xl bg-slate-50 border border-slate-300 text-sm focus:outline-none focus:border-amber-500 font-medium"
+                      className="w-full px-3 py-2.5 sm:px-4 sm:py-3 rounded-xl bg-slate-50 border border-slate-300 text-xs sm:text-sm focus:outline-none focus:border-amber-500 font-medium truncate"
                     >
                       {ROOM_TYPES.map(room => (
                         <option key={room.id} value={room.name}>{room.name} ({room.price})</option>
@@ -470,20 +470,20 @@ const Homepage: React.FC<HomepageProps> = ({ bookings, onAddBooking }) => {
                     </select>
                   </div>
 
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-700 uppercase mb-1">Guest Full Name</label>
+                  <div className="w-full min-w-0">
+                    <label className="block text-[11px] sm:text-xs font-semibold text-slate-700 uppercase mb-1">Guest Full Name</label>
                     <input 
                       type="text" 
                       name="fullName"
                       required 
                       value={formData.fullName}
                       onChange={handleInputChange}
-                      className="w-full px-3.5 sm:px-4 py-3 rounded-xl bg-slate-50 border border-slate-300 text-sm sm:text-base focus:outline-none focus:border-amber-500"
+                      className="w-full px-3 py-2.5 sm:px-4 sm:py-3 rounded-xl bg-slate-50 border border-slate-300 text-xs sm:text-sm focus:outline-none focus:border-amber-500"
                     />
                   </div>
 
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-700 uppercase mb-1">Email Address</label>
+                  <div className="w-full min-w-0">
+                    <label className="block text-[11px] sm:text-xs font-semibold text-slate-700 uppercase mb-1">Email Address</label>
                     <input 
                       type="email" 
                       name="email"
@@ -491,14 +491,14 @@ const Homepage: React.FC<HomepageProps> = ({ bookings, onAddBooking }) => {
                       value={formData.email}
                       onChange={handleInputChange}
                       placeholder="name@example.com"
-                      className="w-full px-3.5 sm:px-4 py-3 rounded-xl bg-slate-50 border border-slate-300 text-sm sm:text-base focus:outline-none focus:border-amber-500"
+                      className="w-full px-3 py-2.5 sm:px-4 sm:py-3 rounded-xl bg-slate-50 border border-slate-300 text-xs sm:text-sm focus:outline-none focus:border-amber-500"
                     />
                   </div>
 
                   {/* CHECK-IN & CHECK-OUT ROW */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-700 uppercase mb-1">Check-in</label>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full">
+                    <div className="min-w-0">
+                      <label className="block text-[11px] sm:text-xs font-semibold text-slate-700 uppercase mb-1">Check-in</label>
                       <input 
                         type="date" 
                         name="checkIn" 
@@ -506,11 +506,11 @@ const Homepage: React.FC<HomepageProps> = ({ bookings, onAddBooking }) => {
                         min={todayStr}
                         value={formData.checkIn} 
                         onChange={handleInputChange} 
-                        className="w-full px-3.5 sm:px-4 py-3 rounded-xl bg-slate-50 border border-slate-300 text-xs sm:text-sm focus:outline-none focus:border-amber-500" 
+                        className="w-full px-3 py-2.5 sm:px-4 sm:py-3 rounded-xl bg-slate-50 border border-slate-300 text-xs sm:text-sm focus:outline-none focus:border-amber-500" 
                       />
                     </div>
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-700 uppercase mb-1">Check-out</label>
+                    <div className="min-w-0">
+                      <label className="block text-[11px] sm:text-xs font-semibold text-slate-700 uppercase mb-1">Check-out</label>
                       <input 
                         type="date" 
                         name="checkOut" 
@@ -518,18 +518,18 @@ const Homepage: React.FC<HomepageProps> = ({ bookings, onAddBooking }) => {
                         min={formData.checkIn || todayStr}
                         value={formData.checkOut} 
                         onChange={handleInputChange} 
-                        className="w-full px-3.5 sm:px-4 py-3 rounded-xl bg-slate-50 border border-slate-300 text-xs sm:text-sm focus:outline-none focus:border-amber-500" 
+                        className="w-full px-3 py-2.5 sm:px-4 sm:py-3 rounded-xl bg-slate-50 border border-slate-300 text-xs sm:text-sm focus:outline-none focus:border-amber-500" 
                       />
                     </div>
                   </div>
 
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-700 uppercase mb-1">Number of Guests</label>
+                  <div className="w-full min-w-0">
+                    <label className="block text-[11px] sm:text-xs font-semibold text-slate-700 uppercase mb-1">Number of Guests</label>
                     <select 
                       name="guests" 
                       value={formData.guests} 
                       onChange={handleInputChange}
-                      className="w-full px-3.5 sm:px-4 py-3 rounded-xl bg-slate-50 border border-slate-300 text-sm focus:outline-none focus:border-amber-500"
+                      className="w-full px-3 py-2.5 sm:px-4 sm:py-3 rounded-xl bg-slate-50 border border-slate-300 text-xs sm:text-sm focus:outline-none focus:border-amber-500"
                     >
                       <option value="1">1 Guest</option>
                       <option value="2">2 Guests</option>
@@ -538,13 +538,13 @@ const Homepage: React.FC<HomepageProps> = ({ bookings, onAddBooking }) => {
                     </select>
                   </div>
 
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-700 uppercase mb-1">Mode of Payment</label>
+                  <div className="w-full min-w-0">
+                    <label className="block text-[11px] sm:text-xs font-semibold text-slate-700 uppercase mb-1">Mode of Payment</label>
                     <select 
                       name="paymentMethod" 
                       value={formData.paymentMethod} 
                       onChange={handleInputChange}
-                      className="w-full px-3.5 sm:px-4 py-3 rounded-xl bg-slate-50 border border-slate-300 text-sm focus:outline-none focus:border-amber-500 font-medium"
+                      className="w-full px-3 py-2.5 sm:px-4 sm:py-3 rounded-xl bg-slate-50 border border-slate-300 text-xs sm:text-sm focus:outline-none focus:border-amber-500 font-medium truncate"
                     >
                       <option value="Pay at Resort">Pay at Resort (Cash / Card)</option>
                       <option value="Credit Card">Credit / Debit Card</option>
@@ -553,38 +553,38 @@ const Homepage: React.FC<HomepageProps> = ({ bookings, onAddBooking }) => {
                     </select>
                   </div>
 
-                  <button type="submit" className="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs uppercase py-4 rounded-xl shadow-md mt-4 transition-all">
+                  <button type="submit" className="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs uppercase py-3.5 rounded-xl shadow-md mt-3 transition-all">
                     Confirm Reservation & Send E-Receipt
                   </button>
                 </form>
               ) : (
-                <div className="text-center py-6 space-y-4">
-                  <CheckCircle size={56} className="text-emerald-500 mx-auto animate-bounce" />
+                <div className="text-center py-4 space-y-3 w-full">
+                  <CheckCircle size={48} className="text-emerald-500 mx-auto animate-bounce" />
                   
                   {currentBookingId && (
-                    <div className="inline-block bg-slate-100 border border-slate-200 px-3 py-1.5 rounded-xl font-mono text-xs text-slate-700">
+                    <div className="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-xl font-mono text-[11px] text-slate-700">
                       Booking Reference: <strong className="text-amber-600">#{currentBookingId}</strong>
                     </div>
                   )}
 
-                  <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 text-left text-xs space-y-2 text-slate-700">
+                  <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 text-left text-xs space-y-2 text-slate-700 w-full">
                     {isSendingEmail ? (
                       <p className="flex items-center gap-2 text-slate-600">
                         <Loader2 size={14} className="animate-spin text-amber-600 shrink-0" /> 
-                        <span>Sending e-receipt to <strong className="text-slate-900">{formData.email}</strong>...</span>
+                        <span>Sending e-receipt...</span>
                       </p>
                     ) : emailStatus === 'success' ? (
                       <p className="text-emerald-700 font-medium">
-                        ✓ E-receipt successfully sent to <strong className="text-slate-900">{formData.email}</strong>. Please check your inbox or spam folder.
+                        ✓ E-receipt successfully sent to <strong className="text-slate-900">{formData.email}</strong>.
                       </p>
                     ) : (
                       <p className="text-rose-600 leading-relaxed font-medium">
-                        There was an issue sending the email via EmailJS. Please make sure your credentials are updated. You can also download the receipt directly below.
+                        There was an issue sending the email via EmailJS. You can download the receipt directly below.
                       </p>
                     )}
                   </div>
 
-                  <div className="pt-2 flex flex-col gap-2">
+                  <div className="pt-2 flex flex-col gap-2 w-full">
                     <button 
                       onClick={() => {
                         const printWindow = window.open('', '_blank');
@@ -595,21 +595,18 @@ const Homepage: React.FC<HomepageProps> = ({ bookings, onAddBooking }) => {
                               <head>
                                 <title>Booking Receipt #${currentBookingId}</title>
                                 <style>
-                                  body { font-family: sans-serif; padding: 40px; color: #334155; }
-                                  .card { max-width: 600px; margin: 0 auto; border: 1px solid #cbd5e1; border-radius: 16px; padding: 32px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-                                  h1 { font-size: 22px; color: #0f172a; margin-bottom: 4px; }
-                                  .tag { background: #fef3c7; color: #d97706; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-block; margin-bottom: 20px; }
-                                  .row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f1f5f9; font-size: 14px; }
+                                  body { font-family: sans-serif; padding: 20px; color: #334155; }
+                                  .card { max-width: 500px; margin: 0 auto; border: 1px solid #cbd5e1; border-radius: 12px; padding: 24px; }
+                                  h1 { font-size: 20px; color: #0f172a; margin-bottom: 4px; }
+                                  .row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-size: 13px; }
                                   .label { color: #64748b; }
                                   .value { font-weight: 600; color: #0f172a; }
-                                  .footer { margin-top: 24px; text-align: center; font-size: 12px; color: #94a3b8; }
                                 </style>
                               </head>
                               <body>
                                 <div class="card">
                                   <h1>New Kampot Hotel & Residence</h1>
-                                  <span class="tag">Confirmed Reservation</span>
-                                  
+                                  <p style="color: #d97706; font-weight: bold;">Confirmed Reservation</p>
                                   <div class="row"><span class="label">Booking ID</span><span class="value">#${currentBookingId}</span></div>
                                   <div class="row"><span class="label">Guest Name</span><span class="value">${formData.fullName}</span></div>
                                   <div class="row"><span class="label">Email Address</span><span class="value">${formData.email}</span></div>
@@ -618,25 +615,19 @@ const Homepage: React.FC<HomepageProps> = ({ bookings, onAddBooking }) => {
                                   <div class="row"><span class="label">Check-out Date</span><span class="value">${formData.checkOut}</span></div>
                                   <div class="row"><span class="label">Guests</span><span class="value">${formData.guests}</span></div>
                                   <div class="row"><span class="label">Payment Method</span><span class="value">${formData.paymentMethod}</span></div>
-                                  
-                                  <div class="footer">Thank you for choosing New Kampot. We look forward to welcoming you!</div>
                                 </div>
-                                <script>
-                                  window.onload = function() {
-                                    window.print();
-                                  };
-                                </script>
+                                <script>window.onload = function() { window.print(); };</script>
                               </body>
                             </html>
                           `);
                           printWindow.document.close();
                         }
                       }}
-                      className="w-full bg-amber-500 hover:bg-amber-600 text-white font-medium px-6 py-3.5 rounded-xl text-xs uppercase transition-all flex items-center justify-center gap-2"
+                      className="w-full bg-amber-500 hover:bg-amber-600 text-white font-medium px-4 py-3 rounded-xl text-xs uppercase transition-all flex items-center justify-center gap-2"
                     >
-                      <Download size={16} /> Download E-Receipt Directly Below
+                      <Download size={16} /> Download E-Receipt Directly
                     </button>
-                    <button onClick={resetAllModals} className="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium px-6 py-3.5 rounded-xl text-xs uppercase transition-all">
+                    <button onClick={resetAllModals} className="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium px-4 py-3 rounded-xl text-xs uppercase transition-all">
                       Close Window
                     </button>
                   </div>
