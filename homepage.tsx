@@ -184,13 +184,11 @@ const Homepage: React.FC<HomepageProps> = ({ bookings, onAddBooking }) => {
     const checkOutDate = new Date(formData.checkOut);
     checkOutDate.setHours(0, 0, 0, 0);
 
-    // Date Validations
     if (checkInDate < today) {
       setDateError('Check-in date cannot be in the past. Please select today or a future date.');
       return;
     }
 
-    // Inayos ang logic: bawal lang kung MAS MAAGA ang Check-out kaysa sa Check-in
     if (checkOutDate < checkInDate) {
       setDateError('Check-out date cannot be before the check-in date.');
       return;
@@ -418,29 +416,29 @@ const Homepage: React.FC<HomepageProps> = ({ bookings, onAddBooking }) => {
         </div>
       </footer>
 
-      {/* DIRECT BOOK NOW MODAL */}
+      {/* DIRECT BOOK NOW MODAL WITH HORIZONTAL SCROLL & OVERFLOW FIX */}
       {isBookNowOpen && (
-        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
-          <div className="bg-white text-slate-800 rounded-3xl max-w-lg w-full p-5 sm:p-8 shadow-2xl relative my-auto max-h-[90vh] flex flex-col">
+        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4 overflow-auto">
+          <div className="bg-white text-slate-800 rounded-3xl w-[95%] max-w-lg p-4 sm:p-8 shadow-2xl relative my-auto max-h-[90vh] flex flex-col border border-slate-100 overflow-x-auto">
             
-            {/* Fixed Header with Close Button */}
-            <div className="flex items-center justify-between pb-4 mb-2 border-b border-slate-100 shrink-0">
-              <h3 className="text-xl sm:text-2xl font-serif text-slate-900">
+            {/* Modal Header */}
+            <div className="flex items-center justify-between pb-4 mb-2 border-b border-slate-100 shrink-0 min-w-[280px]">
+              <h3 className="text-xl sm:text-2xl font-serif text-slate-900 whitespace-nowrap">
                 {!bookingSubmitted ? 'Reserve Your Stay' : 'Reservation Confirmed!'}
               </h3>
               <button 
                 onClick={resetAllModals} 
-                className="text-slate-400 hover:text-slate-700 p-2 rounded-full hover:bg-slate-100 transition-colors"
+                className="text-slate-400 hover:text-slate-700 p-2 rounded-full hover:bg-slate-100 transition-colors shrink-0"
                 aria-label="Close modal"
               >
                 <X size={20} />
               </button>
             </div>
 
-            {/* Scrollable Content */}
-            <div className="overflow-y-auto pr-1 space-y-4 flex-1">
+            {/* Scrollable Form Content */}
+            <div className="overflow-x-auto overflow-y-auto pr-1 space-y-4 flex-1 min-w-[280px]">
               {!bookingSubmitted ? (
-                <form onSubmit={handleDirectBookSubmit} className="space-y-4">
+                <form onSubmit={handleDirectBookSubmit} className="space-y-4 min-w-[280px]">
                   {dateError && (
                     <div className="bg-rose-50 border border-rose-200 text-rose-700 px-4 py-3 rounded-xl text-xs flex items-center gap-2">
                       <AlertCircle size={16} className="shrink-0 text-rose-500" />
@@ -448,7 +446,7 @@ const Homepage: React.FC<HomepageProps> = ({ bookings, onAddBooking }) => {
                     </div>
                   )}
 
-                  <div className="relative h-32 sm:h-36 rounded-2xl overflow-hidden mb-4 border border-slate-200 shadow-inner">
+                  <div className="relative h-32 sm:h-36 rounded-2xl overflow-hidden mb-4 border border-slate-200 shadow-inner min-w-[260px]">
                     <img src={selectedBookNowRoom.image} alt={selectedBookNowRoom.name} className="w-full h-full object-cover" />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent flex items-end p-4">
                       <div className="text-white">
@@ -492,11 +490,12 @@ const Homepage: React.FC<HomepageProps> = ({ bookings, onAddBooking }) => {
                       required 
                       value={formData.email}
                       onChange={handleInputChange}
-                      placeholder="e.g. name@example.com"
+                      placeholder="name@example.com"
                       className="w-full px-3.5 sm:px-4 py-3 rounded-xl bg-slate-50 border border-slate-300 text-sm sm:text-base focus:outline-none focus:border-amber-500"
                     />
                   </div>
 
+                  {/* CHECK-IN & CHECK-OUT ROW */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     <div>
                       <label className="block text-xs font-semibold text-slate-700 uppercase mb-1">Check-in</label>
@@ -644,7 +643,7 @@ const Homepage: React.FC<HomepageProps> = ({ bookings, onAddBooking }) => {
                 </div>
               )}
             </div>
-       
+
           </div>
         </div>
       )}
