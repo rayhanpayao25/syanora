@@ -320,7 +320,7 @@ const ChatWidget: React.FC = () => {
         )}
       </button>
 
-      {/* Main Chat Window - Dynamic height with safe bounds to prevent header overlap */}
+      {/* Main Chat Window */}
       {isOpen && (
         <div className="fixed bottom-20 right-4 sm:bottom-24 sm:right-6 z-[9998] w-[calc(100vw-32px)] sm:w-[400px] h-[480px] sm:h-[580px] max-h-[calc(100vh-100px)] bg-white/95 backdrop-blur-xl rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.2)] border border-amber-100/80 flex flex-col overflow-hidden transition-all duration-300 animate-in fade-in slide-in-from-bottom-5">
           
@@ -400,7 +400,8 @@ const ChatWidget: React.FC = () => {
                     : 'Ask about suites, dining, or amenities...'
                 }
                 disabled={flowStep === 'PRIVACY' || isLoading}
-                className="flex-1 px-4 py-2.5 sm:py-3 text-sm bg-stone-50/80 rounded-2xl border border-amber-200/70 focus:outline-none focus:ring-2 focus:ring-amber-500/40 focus:bg-white disabled:opacity-50 disabled:cursor-not-allowed text-stone-800 placeholder-stone-400 shadow-sm transition-all"
+                /* Binago ang text-sm papuntang text-base para sa mobile viewports upang maiwasan ang auto-zoom ng mobile Safari */
+                className="flex-1 px-4 py-2.5 sm:py-3 text-base sm:text-sm bg-stone-50/80 rounded-2xl border border-amber-200/70 focus:outline-none focus:ring-2 focus:ring-amber-500/40 focus:bg-white disabled:opacity-50 disabled:cursor-not-allowed text-stone-800 placeholder-stone-400 shadow-sm transition-all"
               />
               <button
                 type="submit"
