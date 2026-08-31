@@ -184,13 +184,15 @@ const Homepage: React.FC<HomepageProps> = ({ bookings, onAddBooking }) => {
     const checkOutDate = new Date(formData.checkOut);
     checkOutDate.setHours(0, 0, 0, 0);
 
+    // Date Validations
     if (checkInDate < today) {
       setDateError('Check-in date cannot be in the past. Please select today or a future date.');
       return;
     }
 
-    if (checkOutDate <= checkInDate) {
-      setDateError('Check-out date must be after the check-in date.');
+    // Inayos ang logic: bawal lang kung MAS MAAGA ang Check-out kaysa sa Check-in
+    if (checkOutDate < checkInDate) {
+      setDateError('Check-out date cannot be before the check-in date.');
       return;
     }
     
