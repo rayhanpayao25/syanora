@@ -337,7 +337,7 @@ const ChatWidget: React.FC = () => {
 
       {/* Main Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-20 left-4 right-4 sm:left-auto sm:right-6 z-[9998] sm:w-[400px] h-[480px] sm:h-[580px] max-h-[calc(100vh-100px)] bg-white/95 backdrop-blur-xl rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.2)] border border-amber-100/80 flex flex-col overflow-hidden transition-all duration-300 animate-in fade-in slide-in-from-bottom-5">
+        <div className="fixed bottom-20 left-4 right-4 sm:left-auto sm:right-6 z-[9998] sm:w-[400px] h-[480px] sm:h-[580px] max-h-[calc(100vh-100px)] bg-white/95 backdrop-blur-xl rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.2)] border border-amber-100/80 flex flex-col overflow-x-hidden touch-pan-y transition-all duration-300 animate-in fade-in slide-in-from-bottom-5">
           
           {/* Header */}
           <div className="bg-gradient-to-r from-amber-700 via-amber-800 to-amber-900 text-white px-4 sm:px-5 py-3.5 sm:py-4 flex items-center justify-between shadow-lg shrink-0 relative overflow-hidden">
@@ -376,7 +376,7 @@ const ChatWidget: React.FC = () => {
           </div>
 
           {/* Messages Feed */}
-          <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-4 bg-gradient-to-b from-stone-50/50 to-amber-50/20 scroll-smooth">
+          <div className="flex-1 overflow-y-auto overflow-x-hidden p-4 sm:p-5 space-y-4 bg-gradient-to-b from-stone-50/50 to-amber-50/20 scroll-smooth touch-pan-y">
             {messages.map((msg) => (
               <React.Fragment key={msg.id}>
                 <MessageBubble message={msg} />
