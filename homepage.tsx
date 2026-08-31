@@ -420,15 +420,25 @@ const Homepage: React.FC<HomepageProps> = ({ bookings, onAddBooking }) => {
       {isBookNowOpen && (
         <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
           <div className="bg-white text-slate-800 rounded-3xl max-w-lg w-full p-5 sm:p-8 shadow-2xl relative my-auto max-h-[90vh] flex flex-col">
-            <button onClick={resetAllModals} className="absolute top-4 right-4 sm:top-5 sm:right-5 text-slate-400 hover:text-slate-700 z-10 p-2">
-              <X size={20} />
-            </button>
+            
+            {/* Fixed Header with Close Button */}
+            <div className="flex items-center justify-between pb-4 mb-2 border-b border-slate-100 shrink-0">
+              <h3 className="text-xl sm:text-2xl font-serif text-slate-900">
+                {!bookingSubmitted ? 'Reserve Your Stay' : 'Reservation Confirmed!'}
+              </h3>
+              <button 
+                onClick={resetAllModals} 
+                className="text-slate-400 hover:text-slate-700 p-2 rounded-full hover:bg-slate-100 transition-colors"
+                aria-label="Close modal"
+              >
+                <X size={20} />
+              </button>
+            </div>
 
-            <div className="overflow-y-auto pr-1 space-y-4">
+            {/* Scrollable Content */}
+            <div className="overflow-y-auto pr-1 space-y-4 flex-1">
               {!bookingSubmitted ? (
                 <form onSubmit={handleDirectBookSubmit} className="space-y-4">
-                  <h3 className="text-xl sm:text-2xl font-serif text-slate-900 mb-1 pr-6">Reserve Your Stay</h3>
-                  
                   {dateError && (
                     <div className="bg-rose-50 border border-rose-200 text-rose-700 px-4 py-3 rounded-xl text-xs flex items-center gap-2">
                       <AlertCircle size={16} className="shrink-0 text-rose-500" />
@@ -538,7 +548,7 @@ const Homepage: React.FC<HomepageProps> = ({ bookings, onAddBooking }) => {
                       <option value="Pay at Resort">Pay at Resort (Cash / Card)</option>
                       <option value="Credit Card">Credit / Debit Card</option>
                       <option value="ABA PayWay">ABA PayWay (QR / KHQR)</option>
-                      <option value="Bank Transfer font-medium">Direct Bank Transfer</option>
+                      <option value="Bank Transfer">Direct Bank Transfer</option>
                     </select>
                   </div>
 
@@ -549,7 +559,6 @@ const Homepage: React.FC<HomepageProps> = ({ bookings, onAddBooking }) => {
               ) : (
                 <div className="text-center py-6 space-y-4">
                   <CheckCircle size={56} className="text-emerald-500 mx-auto animate-bounce" />
-                  <h3 className="text-xl sm:text-2xl font-serif text-slate-900">Reservation Confirmed!</h3>
                   
                   {currentBookingId && (
                     <div className="inline-block bg-slate-100 border border-slate-200 px-3 py-1.5 rounded-xl font-mono text-xs text-slate-700">
@@ -633,6 +642,7 @@ const Homepage: React.FC<HomepageProps> = ({ bookings, onAddBooking }) => {
                 </div>
               )}
             </div>
+       
           </div>
         </div>
       )}
