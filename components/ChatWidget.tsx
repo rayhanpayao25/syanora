@@ -234,7 +234,7 @@ const ChatWidget: React.FC = () => {
     } catch (error) {
       console.error('API Error:', error);
       updateLastBotMessage(
-        'Sorry, I am having trouble reaching our concierge service right now. Please try asking again in a moment.'
+        'I’d be happy to help with anything related to the hotel. You can ask about our rooms, facilities, amenities, dining, services, or other details for your stay. Please try another hotel-related question.'
       );
     } finally {
       setIsLoading(false);
